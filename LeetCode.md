@@ -225,7 +225,9 @@ public:
 };
 ```
 
+### [412. Fizz Buzz](https://leetcode-cn.com/problems/fizz-buzz/)
 
+题目比较简单，直接遍历，然后判断是否为3，5的倍数，时间复杂度为O(n)
 
 ## Medium
 
