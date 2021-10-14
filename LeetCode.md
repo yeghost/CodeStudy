@@ -225,9 +225,7 @@ public:
 };
 ```
 
-### [412. Fizz Buzz](https://leetcode-cn.com/problems/fizz-buzz/)
 
-题目比较简单，直接遍历，然后判断是否为3，5的倍数，时间复杂度为O(n)
 
 ## Medium
 
@@ -236,4 +234,90 @@ public:
 ## hard
 
 # 每日一题
+
+### [412. Fizz Buzz](https://leetcode-cn.com/problems/fizz-buzz/)
+
+题目比较简单，直接遍历，然后判断是否为3，5的倍数，时间复杂度为O(n)
+
+~~~c++
+class Solution {
+public:
+    vector<string> fizzBuzz(int n) {
+        vector<string> ans(n);
+        for(int i=0;i<n;i++)
+        {
+            int t=i+1;
+            if(t%15==0)
+            {
+                ans[i]="FizzBuzz";
+            }else if(t%5==0)
+            {
+                ans[i]="Buzz";
+            }
+            else if(t%3==0)
+            {
+                ans[i]="Fizz";
+            }
+            else 
+            {
+                ans[i]=to_string(t);
+            }
+        }
+        return ans;
+    }
+};
+~~~
+
+
+
+# 剑指offer
+
+#### [剑指 Offer II 069. 山峰数组的顶部](https://leetcode-cn.com/problems/B1IidL/)
+
+## 遍历
+
+遍历找到第一个arr[i]>arr[i+1]的位置，就是所要求的答案
+
+~~~c++
+class Solution {
+public:
+    int peakIndexInMountainArray(vector<int>& arr) {
+        int n = arr.size();
+        int ans = -1;
+        for (int i = 1; i < n - 1; ++i) {
+            if (arr[i] > arr[i + 1]) {
+                ans = i;
+                break;
+            }
+        }
+        return ans;
+    }
+};
+~~~
+
+## 二分查找
+
+目的是找到第一个arr[i]>arr[i+1]的位置，那么可以使用二分查找的办法，如果符合条件，往前面找。不符合找后半部分是否有符合条件的。
+
+~~~c++
+class Solution {
+public:
+    int peakIndexInMountainArray(vector<int>& arr) {
+        int n = arr.size();
+        int left = 1, right = n - 2, ans = 0;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (arr[mid] > arr[mid + 1]) {
+                ans = mid;
+                right = mid - 1;
+            }
+            else {
+                left = mid + 1;
+            }
+        }
+        return ans;
+    }
+};
+
+~~~
 
