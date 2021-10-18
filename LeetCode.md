@@ -272,9 +272,82 @@ public:
 
 # 剑指offer
 
-#### [剑指 Offer II 069. 山峰数组的顶部](https://leetcode-cn.com/problems/B1IidL/)
+### [剑指 Offer 03. 数组中重复的数字 ](https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/submissions/)
 
-## 遍历
+### 排序
+
+通过对数组排序，相同的数字必定相邻，扫描一下就行，但是时间复杂度为O(nlogn)
+
+~~~c++
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        for(int i=0;i<nums.size()-1;i++)
+        {
+            if(nums[i]==nums[i+1])
+            {
+                return nums[i];
+            }
+        }
+        return 0;
+    }
+};
+~~~
+
+### 哈希表
+
+时间复杂度为O(n),空间复杂度为O(n)
+
+```C++
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        unordered_map<int, bool> tmp;
+        for(int i=0; i<nums.size(); i++)
+        {
+            if(tmp.count(nums[i]))
+            {
+                return nums[i];
+            }
+            tmp[nums[i]]=true;
+        }
+        return 0;
+    }
+};
+```
+
+### 遍历
+
+这个遍历的方法比较取巧，因为n个数字对应0到n-1，那么只要在遍历的时候，把相应的值放在对应的位置，那么等下次再有值要放在对应位置的时候，就找到了重复数字。
+
+```c++
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        for(int i=0; i<nums.size(); i++)
+        {
+            while(nums[i] != i)
+            {
+                if(nums[i] == nums[nums[i]])
+                {
+                    return nums[i];
+                }
+                int tmp = nums[i];
+                nums[i] = nums[tmp];
+                nums[tmp] = tmp;
+            }
+        }
+        return 0;
+    }
+};
+```
+
+
+
+## [剑指 Offer II 069. 山峰数组的顶部](https://leetcode-cn.com/problems/B1IidL/)
+
+### 遍历
 
 遍历找到第一个arr[i]>arr[i+1]的位置，就是所要求的答案
 
@@ -295,7 +368,7 @@ public:
 };
 ~~~
 
-## 二分查找
+### 二分查找
 
 目的是找到第一个arr[i]>arr[i+1]的位置，那么可以使用二分查找的办法，如果符合条件，往前面找。不符合找后半部分是否有符合条件的。
 
