@@ -343,7 +343,48 @@ public:
 };
 ```
 
+## [剑指 Offer 04. 二维数组中的查找 ](https://leetcode-cn.com/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof/)
 
+### 暴力搜索
+
+遍历整个二维数组，时间复杂度O(mn),空间复杂度O(1)
+
+### 线性查找
+
+从右上角出发，如果右上角的数字等于target，已找到，如果大于target，向左移一列。小于target，这一行必定都小于target，向下移动一行。最多移动m列和n行。时间复杂度O(m+n),空间复杂度O（1）。
+
+```c++
+class Solution {
+public:
+    bool findNumberIn2DArray(vector<vector<int>>& matrix, int target) {
+        int n=matrix.size();
+        if(n == 0)
+        {
+            return false;
+        }
+        int m=matrix[0].size();
+        int row=0,cloumn=m-1;
+        while(row < n && cloumn >= 0)
+        {
+            if(matrix[row][cloumn] == target)
+            {
+                return true;
+            }
+            else if(matrix[row][cloumn] > target)
+            {
+                cloumn--;
+            }
+            else
+            {
+                row++;
+            }
+        }
+        return false;
+    }
+};
+```
+
+需要一个判断数组是否为空的操作
 
 ## [剑指 Offer II 069. 山峰数组的顶部](https://leetcode-cn.com/problems/B1IidL/)
 
