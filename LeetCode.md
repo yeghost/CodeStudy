@@ -386,6 +386,57 @@ public:
 
 需要一个判断数组是否为空的操作
 
+## [剑指 Offer 05. 替换空格 ](https://leetcode-cn.com/problems/ti-huan-kong-ge-lcof/)
+
+### 暴力
+
+从前往后扫描，遇到一个空格就把数组后面的字符向后移动，时间复杂O（n<sup>2</sup>）,代价主要在后面字符需要多次移动
+
+### 从后向前遍历
+
+先遍历一次统计空格的个数，计算出最后字符的长度，从后往前遍历，这样之后移动后面的字符，字符不会被重复移动。
+
+```c++
+class Solution {
+public:
+    string replaceSpace(string s) {
+        int count=0, length = s.size();
+        int i=0;
+        for(i=0;i<length;i++)
+        {
+            if(s[i]==' ')
+            {
+                count++;
+            }
+        }
+        int newlength= count*2+length;
+        s.resize(newlength);
+        int right=length-1,left=newlength-1;
+        while(right < left && right >= 0)
+        {
+            if(s[right]==' ')
+            {
+                s[left--]='0';
+                s[left--]='2';
+                s[left--]='%';
+            }
+            else
+            {
+                s[left--]=s[right];
+            }
+            right--;
+        }
+        return s;
+    }
+};
+```
+
+c++里面 string有个resize函数，可以改变数组大小。
+
+这种题目要注意是在原字符串上进行修改，还是在新的字符串上修改。
+
+原字符串修改的话，从前往后需要考虑多次的重复移动，而新的字符串则不需要考虑，因为后面是空的，不用担被覆盖的问题。
+
 ## [剑指 Offer II 069. 山峰数组的顶部](https://leetcode-cn.com/problems/B1IidL/)
 
 ### 遍历
