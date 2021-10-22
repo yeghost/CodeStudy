@@ -437,6 +437,34 @@ c++里面 string有个resize函数，可以改变数组大小。
 
 原字符串修改的话，从前往后需要考虑多次的重复移动，而新的字符串则不需要考虑，因为后面是空的，不用担被覆盖的问题。
 
+## [剑指 Offer 06. 从尾到头打印链表 ](https://leetcode-cn.com/problems/cong-wei-dao-tou-da-yin-lian-biao-lcof/)
+
+很明显后进先出，利用栈的结构辅助。
+
+```c++
+class Solution {
+public:
+    vector<int> reversePrint(ListNode* head) {
+        stack<int> tmp; 
+        vector<int> ans;
+        ListNode* pre = head;
+        while(pre != NULL)
+        {
+            tmp.push(pre->val);
+            pre = pre->next;
+        }
+        while(!tmp.empty())
+        {
+            ans.push_back(tmp.top());
+            tmp.pop();
+        }
+        return ans;
+    }
+};
+```
+
+
+
 ## [剑指 Offer II 069. 山峰数组的顶部](https://leetcode-cn.com/problems/B1IidL/)
 
 ### 遍历
