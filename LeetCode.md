@@ -268,6 +268,24 @@ public:
 };
 ~~~
 
+## [492. 构造矩形 ](https://leetcode-cn.com/problems/construct-the-rectangle/)
+
+先开平方，然后依次判断是否可以整除即可
+
+```c++
+class Solution {
+public:
+    vector<int> constructRectangle(int area) {
+        int w = sqrt(1.0 * area);
+        while(area%w)
+        {
+            --w;
+        }
+        return {area/w,w};
+    }
+};
+```
+
 
 
 # 剑指offer
