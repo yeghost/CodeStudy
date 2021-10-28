@@ -483,6 +483,93 @@ public:
 
 
 
+## [剑指 Offer 10- I. 斐波那契数列 ](https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof/)
+
+### 递归
+
+时间复杂度指数级，很多值重复计算
+
+### 动态规划
+
+每一项只计算一次，时间复杂度O（n）
+
+```c++
+class Solution {
+public:
+    int fib(int n) {
+        int MOD=1000000007;
+        if(n<2)
+        {
+            return n;
+        }
+        int a=0,b=1,tmp=0;
+        for(int i=2;i<=n;i++)
+        {
+            tmp=b;
+            b=(a+b)%1000000007;
+            a=tmp;
+        }
+        return b;
+    }
+};
+```
+
+### 矩阵快速幂
+
+斐波那契数列数列，可以认为是
+
+![image-20211028095059145](C:\Users\nty\AppData\Roaming\Typora\typora-user-images\image-20211028095059145.png)
+
+![image-20211028095110726](C:\Users\nty\AppData\Roaming\Typora\typora-user-images\image-20211028095110726.png)
+
+转化为一个矩阵的n次方和一个矩阵的乘积，优化的地方在于求n次方，我们可以使用快速幂，当然矩阵的快速幂比实数的快速幂复杂一点。
+
+```c++
+class Solution {
+public:
+    const int MOD = 1000000007;
+    int fib(int n) {
+       if(n<2)
+       {
+           return n;
+       }
+       vector<vector<long>> q = {{1,1},{1,0}};
+       vector<vector<long>> ans = pow(q,n-1);
+       return ans[0][0];
+    }
+
+    vector<vector<long>> pow(vector<vector<long>>& a,int n)
+    {
+        vector<vector<long>> ret ={{1,0},{0,1}};
+        while(n > 0)
+        {
+            if(n & 1)
+            {
+                ret = multiply(ret,a);
+            }
+            n >>= 1;
+            a = multiply(a,a);
+        }
+        return ret;
+    }
+
+    vector<vector<long>> multiply(vector<vector<long>>& a ,vector<vector<long>>& b)
+    {
+        vector<vector<long>> c = {{0,0},{0,0}};
+        for(int i=0;i<2;i++)
+        {
+            for(int j=0;j<2;j++)
+            {
+                c[i][j]=(a[i][0]*b[0][j]+a[i][1]*b[1][j])%MOD;
+            }
+        }
+        return c;
+    }
+};
+```
+
+
+
 ## [剑指 Offer II 069. 山峰数组的顶部](https://leetcode-cn.com/problems/B1IidL/)
 
 ### 遍历
