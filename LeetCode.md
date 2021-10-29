@@ -568,6 +568,26 @@ public:
 };
 ```
 
+## [剑指 Offer 11. 旋转数组的最小数字](https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/)
+
+### 遍历
+
+```java
+class Solution {
+    public int minArray(int[] numbers) {
+        int max=numbers[0];
+        for(int data : numbers)
+        {
+            if(data < max)
+            {
+                max = data;
+            }
+        }
+        return max;
+    }
+}
+```
+
 
 
 ## [剑指 Offer II 069. 山峰数组的顶部](https://leetcode-cn.com/problems/B1IidL/)
