@@ -235,7 +235,22 @@ public:
 
 # 每日一题
 
-### [412. Fizz Buzz](https://leetcode-cn.com/problems/fizz-buzz/)
+## [237. 删除链表中的节点](https://leetcode-cn.com/problems/delete-node-in-a-linked-list/)
+
+删除链表中的节点，因为题目中保证不是最后一个节点，所以直接将下一个节点的值赋给当前节点，然后删除下一个节点
+
+```java
+class Solution {
+    public void deleteNode(ListNode node) {
+        node.val=node.next.val;
+        node.next=node.next.next;
+    }
+}
+```
+
+
+
+## [412. Fizz Buzz](https://leetcode-cn.com/problems/fizz-buzz/)
 
 题目比较简单，直接遍历，然后判断是否为3，5的倍数，时间复杂度为O(n)
 
