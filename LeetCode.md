@@ -603,6 +603,45 @@ class Solution {
 }
 ```
 
+## [剑指 Offer 15. 二进制中1的个数](https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof/)
+
+#### 循环检查二进制位
+
+之所以左移是因为，右移可能会陷入死循环，时间复杂度O(k)
+
+```java
+public class Solution {
+    public int hammingWeight(int n) {
+        int ret = 0;
+        for (int i = 0; i < 32; i++) {
+            if ((n & (1 << i)) != 0) {
+                ret++;
+            }
+        }
+        return ret;
+    }
+}
+```
+
+### 位运算优化
+
+把一个数减去1，那么二进制中最后以为1会变成0，求&，然后重复这个操作，能进行多少次就是有多少个1
+
+```java
+public class Solution {
+    // you need to treat n as an unsigned value
+    public int hammingWeight(int n) {
+        int count=0;
+        while(n!=0)
+        {
+            n= n&(n-1);
+            count++;
+        }   
+        return count;
+    }
+}
+```
+
 
 
 ## [剑指 Offer II 069. 山峰数组的顶部](https://leetcode-cn.com/problems/B1IidL/)
