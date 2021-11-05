@@ -605,7 +605,7 @@ class Solution {
 
 ## [剑指 Offer 15. 二进制中1的个数](https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof/)
 
-#### 循环检查二进制位
+### 循环检查二进制位
 
 之所以左移是因为，右移可能会陷入死循环，时间复杂度O(k)
 
@@ -638,6 +638,69 @@ public class Solution {
             count++;
         }   
         return count;
+    }
+}
+```
+
+## [剑指 Offer 18. 删除链表的节点](https://leetcode-cn.com/problems/shan-chu-lian-biao-de-jie-dian-lcof/)
+
+增加头节点遍历,当然这道题跟原题不太一样
+
+```java
+class Solution {
+    public ListNode deleteNode(ListNode head, int val) {
+        ListNode pre = new ListNode(0);
+        pre.next=head;
+        head = pre;
+        while(pre.next != null)
+        {
+            if(pre.next.val==val)
+            {
+                pre.next=pre.next.next;
+                break;
+            }
+            pre=pre.next;
+        }
+        return head.next;
+    }
+}
+```
+
+## [剑指 Offer 21. 调整数组顺序使奇数位于偶数前面](https://leetcode-cn.com/problems/diao-zheng-shu-zu-shun-xu-shi-qi-shu-wei-yu-ou-shu-qian-mian-lcof/)
+
+### 暴力
+
+扫描，遇见偶数，拿出来，把后面的数字往前移一位，刚拿出来的偶数放在最后
+
+O(n<sup>2</sup>)
+
+### 头尾指针
+
+left遇见奇数跳过，遇见偶数停下
+
+right遇见偶数跳过，遇见奇数停下
+
+互相交换，继续下一次循环
+
+```java
+class Solution {
+    public int[] exchange(int[] nums) {
+        int left = 0,right = nums.length-1,tmp=0;
+        while(left<right)
+        {
+            while(left<right && nums[left]%2!=0)
+            {
+                left++;
+            }
+            while(left<right && nums[right]%2==0)
+            {
+                right--;
+            }
+            tmp=nums[left];
+            nums[left]=nums[right];
+            nums[right]=tmp;
+        }
+        return nums;
     }
 }
 ```
