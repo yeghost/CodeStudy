@@ -705,6 +705,50 @@ class Solution {
 }
 ```
 
+## [剑指 Offer 22. 链表中倒数第k个节点](https://leetcode-cn.com/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof/)
+
+### 遍历
+
+```java
+class Solution {
+    public ListNode getKthFromEnd(ListNode head, int k) {
+        int n = 0;
+        ListNode node = null;
+
+        for (node = head; node != null; node = node.next) {
+            n++;
+        }
+        for (node = head; n > k; n--) {
+            node = node.next;
+        }
+
+        return node;
+    }
+}
+```
+
+### 快慢指针
+
+```java
+class Solution {
+    public ListNode getKthFromEnd(ListNode head, int k) {
+        ListNode fast = head;
+        ListNode slow = head;
+
+        while (fast != null && k > 0) {
+            fast = fast.next;
+            k--;
+        }
+        while (fast != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+
+        return slow;
+    }
+}
+```
+
 
 
 ## [剑指 Offer II 069. 山峰数组的顶部](https://leetcode-cn.com/problems/B1IidL/)
