@@ -749,6 +749,88 @@ class Solution {
 }
 ```
 
+## [剑指 Offer 24. 反转链表](https://leetcode-cn.com/problems/fan-zhuan-lian-biao-lcof/)
+
+### 迭代
+
+把当前节点的next设置为上一个节点，需要先存下来下一个节点，并且需要有个节点保存上一个节点
+
+时间复杂度O(n),空间复杂度O(1)
+
+```java
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+        while (curr != null) {
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+}
+```
+
+### 递归
+
+设置递归结束条件，head为空或head的下一个节点为空，将当前节点的下一个节点之后倒转得到新的头节点，将当前节点的下一个节点的指针指向当前节点。
+
+当前节点的下一个节点置为空
+
+时间复杂度O（n），空间复杂度O（n）
+
+```java
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if(head==null || head.next==null)
+        {
+            return head;
+        }
+        ListNode newHead = reverseList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return newHead;
+    }
+}
+```
+
+## [剑指 Offer 25. 合并两个排序的链表](https://leetcode-cn.com/problems/he-bing-liang-ge-pai-xu-de-lian-biao-lcof/)
+
+### 遍历
+
+```java
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode head = new ListNode(0),curr= head;
+        while(l1 != null && l2 != null)
+        {
+            if(l1.val < l2.val)
+            {
+                curr.next = l1;
+                l1 = l1.next; 
+            }
+            else
+            {
+                curr.next = l2;
+                l2 = l2.next;
+            }
+            curr = curr.next;
+        }
+        if(l1!=null)
+        {
+            curr.next = l1;
+        }
+        else 
+        {
+            curr.next = l2;
+        }
+        return head.next;
+    }
+}
+```
+
 
 
 ## [剑指 Offer II 069. 山峰数组的顶部](https://leetcode-cn.com/problems/B1IidL/)
