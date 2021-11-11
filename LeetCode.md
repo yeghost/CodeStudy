@@ -831,6 +831,59 @@ class Solution {
 }
 ```
 
+## [剑指 Offer 53 - II. 0～n-1中缺失的数字](https://leetcode-cn.com/problems/que-shi-de-shu-zi-lcof/submissions/)
+
+### 遍历
+
+找到值不等于索引的项
+
+时间复杂度O(n)，空间复杂度O(1)
+
+```java
+class Solution {
+    public int missingNumber(int[] nums) {
+        int ans=0;
+        for(ans=0;ans<nums.length;ans++)
+        {
+            if(nums[ans]!=ans)
+            {
+                break;
+            }
+        }
+        return ans;
+    }
+}
+```
+
+
+
+### 二分查找
+
+假如中间的值等于索引，说明缺失的数字不在左半部分，将left更新为mid，如果不等于索引，则证明缺失的数字在左半部分
+
+时间复杂度O（logn）,空间复杂度O(1)
+
+```java
+class Solution {
+    public int missingNumber(int[] nums) {
+        int left =0,right=nums.length-1;
+        while(left <= right)
+        {
+            int mid = (left+right)/2;
+            if(nums[mid] == mid)
+            {
+                left = mid+1;
+            }
+            else
+            {
+                right = mid-1;
+            }
+        }
+        return left;
+    }
+}
+```
+
 
 
 ## [剑指 Offer II 069. 山峰数组的顶部](https://leetcode-cn.com/problems/B1IidL/)
