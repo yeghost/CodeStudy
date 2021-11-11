@@ -10,5 +10,5 @@ P7
 
 # mybatis
 
-[最新IDEA版-黑马程序员框架学习(Maven、MyBatis、Spring、SpringMVC等)！[附全套资料，课件源码文档\]_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1pA411t78Y?p=5&spm_id_from=pageDriver)
+https://www.bilibili.com/video/BV1pA411t78Y?p=7&spm_id_from=pageDriver
 
