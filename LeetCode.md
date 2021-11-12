@@ -831,6 +831,74 @@ class Solution {
 }
 ```
 
+## [剑指 Offer 53 - I. 在排序数组中查找数字 I](https://leetcode-cn.com/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/)
+
+### 遍历
+
+从前到后遍历，找到一个+1
+
+时间复杂度O(n),空间复杂度O(1)
+
+```java
+class Solution {
+    public int search(int[] nums, int target) {
+        if(nums.length == 0)
+        {
+            return 0;
+        }
+        int ans = 0;
+        for(int e : nums)
+        {
+            if(e == target)
+            {
+                ans++;
+            }
+        }
+        return ans;
+    }
+}
+```
+
+### 二分
+
+找到第一个出现target的下标和最后一个target的下标，两者相减即可
+
+时间复杂度O(logn),空间复杂度O(1)
+
+```java
+class Solution {
+    public int search(int[] nums, int target) {
+        int left = findpostion(nums,target,true);
+        int right = findpostion(nums,target,false)-1;
+        if(left < nums.length &&nums[left] == target && nums[right]==target)
+        {
+            return right-left+1;
+        }
+        return 0;
+    }
+    public int findpostion(int[] nums,int target,boolean flag)
+    {
+        int left = 0,right = nums.length-1,mid=0,ans=0;
+        while(left <= right)
+        {
+            mid = (left+right)/2;
+            if(nums[mid] > target || (flag && nums[mid] >= target))
+            {
+                right = mid-1;
+                ans = mid;
+            }
+            else
+            {
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+}
+```
+
+这里面有个处理，通过一个布尔变量flag，从而可以分别找到最前面的值和最后面的值，减少了一个函数的编写。
+
 ## [剑指 Offer 53 - II. 0～n-1中缺失的数字](https://leetcode-cn.com/problems/que-shi-de-shu-zi-lcof/submissions/)
 
 ### 遍历
