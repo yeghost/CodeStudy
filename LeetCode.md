@@ -301,6 +301,31 @@ public:
 };
 ```
 
+## [563. 二叉树的坡度 ](https://leetcode-cn.com/problems/binary-tree-tilt/)
+
+### dfs
+
+```java
+class Solution {
+    int ans=0;
+    public int findTilt(TreeNode root) {
+        dfs(root);
+        return ans;
+    }
+    public int dfs(TreeNode root)
+    {
+        if(root==null)
+        {
+            return 0;
+        }
+        int left = dfs(root.left);
+        int right = dfs(root.right);
+        ans+=Math.abs(right-left);
+        return left+right+root.val;
+    }
+}
+```
+
 
 
 # 剑指offer
@@ -922,6 +947,98 @@ class Solution {
     }
 }
 ```
+
+## [剑指 Offer 57. 和为s的两个数字](https://leetcode-cn.com/problems/he-wei-sde-liang-ge-shu-zi-lcof/)
+
+前提是题目给的是升序数组
+
+### 双指针
+
+时间复杂度O(n),空间复杂度O(1)
+
+left和right指针判断当前和与目标的大小关系，大于，right左移，小于，left右移。
+
+~~~java
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int[] ans = new int[2];
+        int left =0,right=nums.length-1;
+        while(left<=right)
+        {
+            int tmp = nums[left]+nums[right];
+            if( tmp == target)
+            {
+                break;
+            }
+            else if(tmp > target)
+            {
+                right--;
+            }
+            else
+            {
+                left++;
+            }
+        }
+        ans[0]=nums[left];
+        ans[1]=nums[right];
+        return ans;
+    }
+}
+~~~
+
+### 哈希
+
+这种方法在数组是无序的时候也有用，因为hash里面查找target-e只需要一次查找即可。
+
+时间复杂度O(n),空间复杂度O(n)
+
+这个遍历了两次数组
+
+~~~java
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        HashSet<Integer> set = new HashSet<>();
+        int[] ans = new int[2];
+        for(int e : nums)
+        {
+            set.add(e);
+        }
+        for(int e : nums)
+        {
+            if(set.contains(e) && set.contains(target-e))
+            {
+                ans[0] = e;
+                ans[1] = target-e;
+                break;
+            }
+        }
+        return ans;
+    }
+}
+~~~
+
+下面遍历一次数组，set添加过程和寻找过程结合在一起
+
+~~~java
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        HashSet<Integer> set = new HashSet<>();
+
+        // 只需遍历一次数组
+        for (int i = 0; i < nums.length; i++) {
+            // 如果target-nums[i]在HashSet中，说明找到了
+            if (set.contains(target - nums[i])) {
+                return new int[]{nums[i], target-nums[i]};
+            }
+            // 否则要做的只是将当前元素添加到HashSet中
+            set.add(nums[i]);
+        }
+
+        // 没有找到的话返回一个空数组
+        return new int[0];
+    }
+}
+~~~
 
 
 
