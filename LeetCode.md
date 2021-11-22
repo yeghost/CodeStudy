@@ -248,6 +248,125 @@ class Solution {
 }
 ```
 
+## [397. 整数替换](https://leetcode-cn.com/problems/integer-replacement/)
+
+本题之所以存在最小替换，是因为n为奇数时，选择+1和-1对最终结果影响不一样
+
+### 递归
+
+有个优化细节，奇数，可以一下子判断两步，从而将递归简化为n/2,否则会溢出。并且注意2<sup>32</sup>+1会溢出
+
+~~~java
+class Solution {
+    public int integerReplacement(int n) {
+        if(n==1)
+        {
+            return 0;
+        }
+        else if(n%2==0)
+        {
+            return 1+integerReplacement(n/2);
+        }else
+        {
+            return 2 + Math.min(integerReplacement(n/2),integerReplacement(n/2+1));
+        }
+    }
+}
+~~~
+
+### 记忆化
+
+递归里面有些时间浪费，因为有些n的值被重复计算，可以用map记录下来
+
+~~~java
+class Solution {
+    Map<Integer, Integer> tmp = new HashMap<Integer, Integer>();
+
+    public int integerReplacement(int n) {
+        if(n==1)
+        {
+            return 0;
+        }
+        if(!tmp.containsKey(n))
+        {
+            if(n%2==0)
+            {
+                tmp.put(n,1+integerReplacement(n/2));
+            }
+            else
+            {
+                tmp.put(n,2+Math.min(integerReplacement(n/2),integerReplacement(n/2+1)));
+            }
+        }
+        return tmp.get(n);
+    }
+}
+
+~~~
+
+### 贪心
+
+应该是本题的最优解，当n为偶数时，n/2是唯一操作，当为奇数时，如何判断+1还是-1是关键
+
+n为奇数n%4为1或3
+
+1. n%4 == 1时-1为最优解
+
+   如果n-1，结果(n-1)/2,为偶数，可以变化为(n-1)/4，2步，变为(n+3)/4，3步
+
+   如果n+1，结果(n+1)/2,为奇数，+1，变为(n+3)/4,3步，-1变为(n-1)/4,3步
+
+   可以看出变成相同的结果 -1方法优于+1
+
+2. n%4==3时，+1为最优解
+
+   如果n+1，结果(n+1)/2,为偶数，可以变化为(n+1)/4，2步，变为(n-1)/4，3步
+
+   如果n-1，结果(n-1)/2,为奇数，+1，变为(n+3)/4,2步，-1变为(n-3)/4,3步
+
+   可以看出变成相同的结果 -1方法优于+1
+
+   3要特殊考虑，因为不需要后续操作
+
+~~~java
+class Solution {
+    public int integerReplacement(int n) {
+        int ans=0;
+        if(n==1)
+        {
+            return 0;
+        }
+        while(n > 1)
+        {
+            if(n%2==0)
+            {
+                n=n/2;
+                ans++;
+            }
+            else
+            {
+                if(n == 3)
+                {
+                    ans+=2;
+                    return ans;
+                }
+                else if(n%4 == 1)
+                {
+                    n=n/2;
+                    ans+=2;
+                }
+                else
+                {
+                    n=n/2+1;
+                    ans+=2;
+                }
+            }
+        }
+        return ans;
+    }
+}
+~~~
+
 
 
 ## [412. Fizz Buzz](https://leetcode-cn.com/problems/fizz-buzz/)
