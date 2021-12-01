@@ -445,6 +445,39 @@ class Solution {
 }
 ```
 
+## [1446. 连续字符 ](https://leetcode-cn.com/problems/consecutive-characters/)
+
+遍历一遍即可
+
+~~~java
+class Solution {
+    public int maxPower(String s) {
+        int len = s.length();
+        if(len <= 0)
+        {
+            return 0;
+        }
+        int max=1,tmp=1;
+        for(int i=1;i<len;i++)
+        {
+            if(s.charAt(i-1) == s.charAt(i))
+            {
+                tmp++;
+                if(tmp > max)
+                {
+                    max = tmp;
+                }
+            }
+            else
+            {
+                tmp = 1;
+            }
+        }
+        return max;
+    }
+}
+~~~
+
 
 
 # 剑指offer
