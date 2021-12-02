@@ -420,6 +420,41 @@ public:
 };
 ```
 
+## [506. 相对名次](https://leetcode-cn.com/problems/relative-ranks/)
+
+先排序，排完，按照顺序颁发名次
+
+```java
+class Solution {
+    public String[] findRelativeRanks(int[] score) {
+        int n = score.length;
+        String [] tmp = {"Gold Medal","Silver Medal","Bronze Medal"};
+        int [][] arr =new int[n][2];
+        for(int i=0;i<n;i++)
+        {
+            arr[i][0]=score[i];
+            arr[i][1]=i;
+        }
+        Arrays.sort(arr,(a,b)-> b[0]-a[0]);
+        String [] ans =new String[n];
+        for(int i=0;i<n;i++)
+        {
+            if(i < 3)
+            {
+                ans[arr[i][1]] = tmp[i];
+            }
+            else
+            {
+                ans[arr[i][1]] = Integer.toString(i + 1);
+            }
+        }
+        return ans;
+    }
+}
+```
+
+
+
 ## [563. 二叉树的坡度 ](https://leetcode-cn.com/problems/binary-tree-tilt/)
 
 ### dfs
