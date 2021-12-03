@@ -480,6 +480,54 @@ class Solution {
 }
 ```
 
+
+
+## [1005. K 次取反后最大化的数组和](https://leetcode-cn.com/problems/maximize-sum-of-array-after-k-negations/)
+
+首先将最小的负数转化为正数，假如负数转换完，k仍大于零，如果有0，对零操作，用完k。如果没有0，且k为奇数，对最小的整数进行操作（偶数，相当于不用操作）
+
+~~~java
+class Solution {
+    public int largestSumAfterKNegations(int[] nums, int k) {
+        Map<Integer,Integer> tmp= new HashMap<Integer,Integer>();
+        for(int num : nums)
+        {
+            tmp.put(num,tmp.getOrDefault(num,0)+1);
+        }
+        int ans = Arrays.stream(nums).sum();
+        for(int i=-100;i<0;i++)
+        {
+            if(tmp.containsKey(i))
+            {
+                if(k==0)
+                {
+                    break;
+                }
+                int optnum = Math.min(k,tmp.get(i));
+                ans = ans - 2 * optnum * i;
+                k = k-optnum;
+                tmp.put(i,tmp.getOrDefault(i,0)-optnum);
+                tmp.put(-i,tmp.getOrDefault(-i,0)+optnum);
+            }
+        }
+        if(k>0 && k%2==1 && !tmp.containsKey(0))
+        {
+             for (int i = 1; i <= 100; ++i) {
+                if (tmp.containsKey(i)) {
+                    ans -= i * 2;
+                    tmp.put(i,tmp.getOrDefault(i,0)-1);
+                    tmp.put(-i,tmp.getOrDefault(-i,0)+1);                    
+                    break;
+                }
+            }
+        }
+        return ans;
+    }
+}
+~~~
+
+
+
 ## [1446. 连续字符 ](https://leetcode-cn.com/problems/consecutive-characters/)
 
 遍历一遍即可
