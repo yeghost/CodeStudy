@@ -563,6 +563,36 @@ class Solution {
 
 
 
+## [1816. 截断句子](https://leetcode-cn.com/problems/truncate-sentence/)
+
+### 遍历
+
+~~~java
+class Solution {
+    public String truncateSentence(String s, int k) {
+        String ans="";
+        int n = s.length();
+        for(int i=0;i < n;i++)
+        {
+            if(s.charAt(i)==' ')
+            {
+                k--;
+                if(k == 0)
+                {
+                    break;
+                }
+            }
+            ans+=s.charAt(i);
+        }
+        return ans;
+    }
+}
+~~~
+
+
+
+
+
 # 剑指offer
 
 ## [剑指 Offer 03. 数组中重复的数字 ](https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/submissions/)
