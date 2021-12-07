@@ -233,6 +233,123 @@ public:
 
 ## hard
 
+
+
+# 力扣hot100
+
+## [338. 比特位计数](https://leetcode-cn.com/problems/counting-bits/)
+
+### 找规律
+
+7和3相差1，6和2相差1，2和0相差1，所以等于减去最高位的1和剩下的数1数量一样（和题解的一种解法一样，不过题解实现的不太一样）
+
+~~~java
+class Solution {
+    public int[] countBits(int n) {
+        int[] ans = new int[n+1];
+        int tmp = 1;
+        ans[0] = 0;
+        for(int i=1;i<=n;i++)
+        {
+            if(tmp*2 <= i)
+            {
+                tmp=tmp*2;
+            }
+            ans[i]=1+ans[i-tmp];
+        }
+        return ans;
+    }
+}
+~~~
+
+### Brian Kernighan 算法
+
+直接遍历，然后对每个数求1的个数，*O*(*n*log*n*)，找1个数的时候，利用Brian Kernighan加速
+
+~~~java
+class Solution {
+    public int[] countBits(int n) {
+        int[] bits = new int[n + 1];
+        int highBit = 0;
+        for (int i = 1; i <= n; i++) {
+            if ((i & (i - 1)) == 0) {
+                highBit = i;
+            }
+            bits[i] = bits[i - highBit] + 1;
+        }
+        return bits;
+    }
+}
+~~~
+
+### 动态规划——最高有效位
+
+之前时间复杂度瓶颈在于求每个数的1的个数，核心思想利用之前已经求过的数，来减少这个求解过程，如果，将最高位的1去掉可以获得跟之前已经求出的结果
+
+*bits*[*i*]=*bits*[*j*]+1
+
+时间复杂度O(n),空间复杂度O(1)
+
+~~~java
+class Solution {
+    public int[] countBits(int n) {
+        int[] bits = new int[n + 1];
+        int highBit = 0;
+        for (int i = 1; i <= n; i++) {
+            if ((i & (i - 1)) == 0) {
+                highBit = i;
+            }
+            bits[i] = bits[i - highBit] + 1;
+        }
+        return bits;
+    }
+}
+~~~
+
+和我的做法区别在于，这个最高位怎么求，他是遍历时更新，我是和当前值比较大小
+
+### 动态规划——最低有效位
+
+一个较大的数，可以理解为一个较小的数向左移动1位，再加上一个1或者0，可以得到一个转换关系
+
+*bits*[*i*]=*bits*[*i/2*]+i&1
+
+时间复杂度O(n),空间复杂度O(1)
+
+~~~java
+class Solution {
+    public int[] countBits(int n) {
+        int[] bits = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            bits[i] = bits[i >> 1] + (i & 1);
+        }
+        return bits;
+    }
+}
+~~~
+
+### 动态规划——最低设置位
+
+一个较大的数，把最后一个1变为0得到较小的数
+
+那么*bits*[*x*]=*bits*[*x* & (*x*−1)]+1
+
+时间复杂度O(n),空间复杂度O(1)
+
+~~~java
+class Solution {
+    public int[] countBits(int n) {
+        int[] bits = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            bits[i] = bits[i & (i - 1)] + 1;
+        }
+        return bits;
+    }
+}
+~~~
+
+
+
 # 每日一题
 
 ## [237. 删除链表中的节点](https://leetcode-cn.com/problems/delete-node-in-a-linked-list/)
