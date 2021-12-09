@@ -348,6 +348,92 @@ class Solution {
 }
 ~~~
 
+## [48. 旋转图像](https://leetcode-cn.com/problems/rotate-image/)
+
+### 使用辅助数组
+
+行列交换，从matrix[i] [j]换到 matrix[j] [n-i-1]
+
+时间复杂度O(n<sup>2</sup>)
+
+空间复杂度O(n<sup>2</sup>)
+
+~~~java
+class Solution {
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        int[][] matrix_new = new int[n][n];
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                matrix_new[j][n - i - 1] = matrix[i][j];
+            }
+        }
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                matrix[i][j] = matrix_new[i][j];
+            }
+        }
+    }
+}
+~~~
+
+### 原地旋转
+
+如果不建立辅助数组，直接换位置会造成什么结果，会导致matrix[j] [n-i-1]位置的数据被覆盖，这样之后换这个位置的数据会有问题，所以想法是把这个位置的数据提前换走，或者存起来。
+
+换位置发现是matrix[i] [j] ，matrix[j] [n - i - 1]，matrix[n-i-1] [n - j - 1]，matrix[n-i-1] [n - j - 1]，matrix[n - j - 1] [i],四个位置互换，那么把一个位置的信息存起来，剩下位置依次交换即可。
+
+~~~java
+class Solution {
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        for(int i=0;i<n/2;i++)
+        {
+            for(int j=0;j<(n+1)/2;j++)
+            {
+                int tmp= matrix[i][j];
+                matrix[i][j] = matrix[n-j-1][i];
+                matrix[n-j-1][i] = matrix[n-i-1][n-j-1];
+                matrix[n-i-1][n-j-1] = matrix[j][n-i-1];
+                matrix[j][n-i-1] = tmp;
+            }
+        }
+    }
+}
+~~~
+
+### 用翻转代替旋转
+
+先水平翻转，再对角线翻转
+
+matrix[i] [j]换到matrix[n-i-1] [j]，对角线翻转到matrix[j] [n-i-1],正好是之前要还的位置
+
+~~~java
+class Solution {
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        for(int i=0;i<n/2;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[n-i-1][j];
+                matrix[n-i-1][j] = tmp;
+            }
+        }
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = tmp;
+            }
+        }
+    }
+}
+~~~
+
 
 
 # 每日一题
