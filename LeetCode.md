@@ -434,6 +434,77 @@ class Solution {
 }
 ~~~
 
+## [49. 字母异位词分组](https://leetcode-cn.com/problems/group-anagrams/)
+
+把含有相同的字母的放在一起，关键点在于如何把相同字母这个点给做成一个统一的标志，当作哈希表的key，每个元素可以当作value
+
+### 排序
+
+可以先把每个string排序，那么同一组排完序应该是同一个结果，然后做哈希，遍历一遍即可
+
+时间复杂度：*O*(*nklogk*)
+
+空间复杂度：O(nk)
+
+~~~java
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String,List<String>> map = new HashMap<String,List<String>>() ;
+        for(String str : strs)
+        {
+            char[] array = str.toCharArray();
+            Arrays.sort(array);
+            String key = new String(array);
+            List<String> list = map.getOrDefault(key,new ArrayList<String>());
+            list.add(str);
+            map.put(key,list);
+        }
+        return new ArrayList<List<String>>(map.values());
+    }
+}
+~~~
+
+### 计数
+
+每一组中，他们同一个字母出现的次数应该是相同的，所以直接计数即可
+
+时间复杂度 *O*(*n*(*k*+∣Σ∣))
+
+空间复杂度 *O*(*n*(*k*+∣Σ∣))
+
+~~~java
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String,List<String>> map = new HashMap<String,List<String>>();
+        for(String str : strs)
+        {
+            int[] count = new int[26];
+            for(int i=0;i< str.length();i++)
+            {
+                count[str.charAt(i)-'a']++;
+            }
+
+            StringBuffer strb = new StringBuffer();
+            for(int i=0;i<26;i++)
+            {
+                if(count[i]!=0)
+                {
+                    strb.append('a'+i);
+                    strb.append(count[i]);
+                }
+            }
+            String key = strb.toString();
+            List<String> list = map.getOrDefault(key,new ArrayList<String>());
+            list.add(str);
+            map.put(key,list);
+        } 
+        return new ArrayList<List<String>>(map.values());
+    }
+}
+~~~
+
+
+
 
 
 # 每日一题

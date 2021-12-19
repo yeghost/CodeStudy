@@ -1,8 +1,8 @@
 # spring
 
-[黑马程序员最全SSM框架教程|Spring+SpringMVC+MyBatis全覆盖_SSM整合_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1WZ4y1P7Bp?p=7&spm_id_from=pageDriver)
+[尚硅谷Spring框架视频教程（spring5源码级讲解）_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1Vf4y127N5?p=3)
 
-P7
+3
 
 # maven
 
